@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.java.domain.Address;
 import com.java.domain.Category;
 import com.java.domain.City;
+import com.java.domain.Client;
 import com.java.domain.Product;
 import com.java.domain.State;
+import com.java.domain.enums.ClientType;
+import com.java.repositories.AdressRepository;
 import com.java.repositories.CategoryRepository;
 import com.java.repositories.CityRepository;
+import com.java.repositories.ClientRepository;
 import com.java.repositories.ProductRepository;
 import com.java.repositories.StateRepository;
 
@@ -29,6 +34,12 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	CityRepository cityRepository;
+	
+	@Autowired
+	AdressRepository adressRepository;
+	
+	@Autowired
+	ClientRepository clientRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -58,5 +69,16 @@ public class TestConfig implements CommandLineRunner{
 		
 		stateRepository.saveAll(Arrays.asList(state1,state2));
 		cityRepository.saveAll(Arrays.asList(city1,city2));
+		
+		Client client1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.PESSOAFISICA);
+		client1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Address adress1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", client1, city1);
+		Address adress2 = new Address(null, "Avenida Matos", "800", "Sala 103", "Centro", "38220834", client1, city2);
+		
+		client1.getAdresses().addAll(Arrays.asList(adress1, adress2));
+		
+		clientRepository.saveAll(Arrays.asList(client1));
+		adressRepository.saveAll(Arrays.asList(adress1, adress2));
 	}
 }
