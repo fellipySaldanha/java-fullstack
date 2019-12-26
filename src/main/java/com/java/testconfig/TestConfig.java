@@ -1,5 +1,6 @@
 package com.java.testconfig;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,20 @@ import com.java.domain.Address;
 import com.java.domain.Category;
 import com.java.domain.City;
 import com.java.domain.Client;
+import com.java.domain.Order;
+import com.java.domain.Payment;
+import com.java.domain.PaymentBankBill;
+import com.java.domain.PaymentCard;
 import com.java.domain.Product;
 import com.java.domain.State;
 import com.java.domain.enums.ClientType;
+import com.java.domain.enums.PaymentStatus;
 import com.java.repositories.AdressRepository;
 import com.java.repositories.CategoryRepository;
 import com.java.repositories.CityRepository;
 import com.java.repositories.ClientRepository;
+import com.java.repositories.OrderRepository;
+import com.java.repositories.PaymentRepository;
 import com.java.repositories.ProductRepository;
 import com.java.repositories.StateRepository;
 
@@ -40,6 +48,12 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	ClientRepository clientRepository;
+	
+	@Autowired
+	OrderRepository orderRepository;
+	
+	@Autowired
+	PaymentRepository paymentRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -80,5 +94,21 @@ public class TestConfig implements CommandLineRunner{
 		
 		clientRepository.saveAll(Arrays.asList(client1));
 		adressRepository.saveAll(Arrays.asList(adress1, adress2));
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	
+		Order order1 = new Order(null, simpleDateFormat.parse("30/09/2019 10:32"), client1, adress1);
+		Order order2 = new Order(null, simpleDateFormat.parse("10/10/2019 10:32"), client1, adress2);  
+	
+		Payment payment1 = new PaymentCard(null, PaymentStatus.PAID, order1, 6);
+		order1.setPayment(payment1);
+		
+		Payment payment2 = new PaymentBankBill(null, PaymentStatus.PENDING, order2, simpleDateFormat.parse("20/10/2019 00:00"), null);
+		order2.setPayment(payment2);
+		
+		client1.getOrders().addAll(Arrays.asList(order1, order2));
+		
+		orderRepository.saveAll(Arrays.asList(order1, order2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 	}
 }
