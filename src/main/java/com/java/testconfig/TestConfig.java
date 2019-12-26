@@ -12,6 +12,7 @@ import com.java.domain.Category;
 import com.java.domain.City;
 import com.java.domain.Client;
 import com.java.domain.Order;
+import com.java.domain.OrderItem;
 import com.java.domain.Payment;
 import com.java.domain.PaymentBankBill;
 import com.java.domain.PaymentCard;
@@ -23,6 +24,7 @@ import com.java.repositories.AdressRepository;
 import com.java.repositories.CategoryRepository;
 import com.java.repositories.CityRepository;
 import com.java.repositories.ClientRepository;
+import com.java.repositories.OrderItemRepository;
 import com.java.repositories.OrderRepository;
 import com.java.repositories.PaymentRepository;
 import com.java.repositories.ProductRepository;
@@ -54,6 +56,9 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	PaymentRepository paymentRepository;
+	
+	@Autowired
+	OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -110,5 +115,18 @@ public class TestConfig implements CommandLineRunner{
 		
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+		
+		OrderItem orderItem1 = new OrderItem(order1, p1, 0.00, 1, 2000.00);
+		OrderItem orderItem2 = new OrderItem(order1, p2, 0.00, 2, 1600.00);
+		OrderItem orderItem3 = new OrderItem(order2, p2, 100.00, 1, 800.00);
+		
+		order1.getItems().addAll(Arrays.asList(orderItem1, orderItem2));
+		order2.getItems().addAll(Arrays.asList(orderItem3));
+		
+		p1.getItems().addAll(Arrays.asList(orderItem1));
+		p2.getItems().addAll(Arrays.asList(orderItem2, orderItem3));
+		
+		orderItemRepository.saveAll(Arrays.asList(orderItem1,orderItem2, orderItem3));
+		
 	}
 }
