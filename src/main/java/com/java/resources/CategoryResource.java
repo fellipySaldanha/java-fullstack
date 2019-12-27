@@ -1,6 +1,8 @@
 package com.java.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.java.domain.Category;
+import com.java.dto.CategoryDTO;
 import com.java.services.CategoryService;
 
 @RestController
@@ -24,8 +27,7 @@ public class CategoryResource {
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
     public ResponseEntity<Category> findById(@PathVariable Integer id){
     	Category category = service.findById(id);
-    	return ResponseEntity.ok().body(category);
-    			
+    	return ResponseEntity.ok().body(category);    			
     }
     
     @RequestMapping(method = RequestMethod.POST)
@@ -46,5 +48,12 @@ public class CategoryResource {
     public ResponseEntity<Void> delete(@PathVariable Integer id){
     	service.deleteById(id);
     	return ResponseEntity.noContent().build();
+    }
+    
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDTO>> findAll(){
+    	List<Category> categories = service.findAll();
+    	List<CategoryDTO> listDtos = categories.stream().map(category -> new CategoryDTO(category)).collect(Collectors.toList());
+    	return ResponseEntity.ok().body(listDtos);    			
     }
 }
