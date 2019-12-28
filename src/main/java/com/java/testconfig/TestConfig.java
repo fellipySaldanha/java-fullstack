@@ -65,6 +65,12 @@ public class TestConfig implements CommandLineRunner{
 		
 		Category cat1 = new Category(null, "Informática");
 		Category cat2 = new Category(null, "Escritório");
+		Category cat3 = new Category(null, "Cama mesa e banho");
+		Category cat4 = new Category(null, "Eletrônicos");
+		Category cat5 = new Category(null, "Jardinagem");
+		Category cat6 = new Category(null, "Decoração");
+		Category cat7 = new Category(null, "Perfumaria");
+
 		Product p1 = new Product(null, "Computador", 2000.00);
 		Product p2 = new Product(null, "Impressora", 800.00);
 		
@@ -74,7 +80,7 @@ public class TestConfig implements CommandLineRunner{
 		p1.getCategories().addAll(Arrays.asList(cat1));
 		p1.getCategories().addAll(Arrays.asList(cat2));
 				
-		categoryRepository.saveAll(Arrays.asList(cat1,cat2));
+		categoryRepository.saveAll(Arrays.asList(cat1,cat2, cat3, cat4, cat5, cat6, cat7));
 		productRepository.saveAll(Arrays.asList(p1,p2));
 		
 		State state1 = new State(null, "Minas Gerais");
@@ -127,6 +133,7 @@ public class TestConfig implements CommandLineRunner{
 		p2.getItems().addAll(Arrays.asList(orderItem2, orderItem3));
 		
 		orderItemRepository.saveAll(Arrays.asList(orderItem1,orderItem2, orderItem3));
+		
 		
 	}
 }
