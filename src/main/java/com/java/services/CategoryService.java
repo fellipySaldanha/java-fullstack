@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.java.domain.Category;
+import com.java.dto.CategoryDTO;
 import com.java.repositories.CategoryRepository;
 import com.java.services.exceptions.DataIntegrityException;
 import com.java.services.exceptions.ObjectNotFoundException;
@@ -53,5 +54,9 @@ public class CategoryService {
 	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repository.findAll(pageRequest);
+	}
+
+	public Category fromDTO(CategoryDTO category){
+		return new Category(category.getId(), category.getName());
 	}
 }
