@@ -9,8 +9,6 @@ import com.java.domain.Client;
 
 import org.hibernate.validator.constraints.Length;
 
-
-
 public class ClientDTO implements Serializable{
 
     private static final long serialVersionUID = 1L;
