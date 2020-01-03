@@ -1,11 +1,14 @@
 package com.java.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import com.java.domain.Client;
+import com.java.dto.ClientDTO;
+import com.java.dto.ClientNewDto;
 import com.java.services.ClientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping(value = "/clients")
@@ -62,6 +66,14 @@ public class ClientResource {
         Page<Client> categories = service.findPage(page, linesPerPage, orderBy, direction);
         Page<ClientDTO> listDtos = categories.map(client -> new ClientDTO(client));
     	return ResponseEntity.ok().body(listDtos);    			
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDto clientDto){
+        Client client = service.fromDTO(clientDto);
+    	client = service.insert(client);
+    	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(client.getId()).toUri();
+    	return ResponseEntity.created(uri).build();
     }
     
 }

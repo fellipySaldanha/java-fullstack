@@ -3,10 +3,6 @@ package com.java.testconfig;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
-
 import com.java.domain.Address;
 import com.java.domain.Category;
 import com.java.domain.City;
@@ -20,7 +16,7 @@ import com.java.domain.Product;
 import com.java.domain.State;
 import com.java.domain.enums.ClientType;
 import com.java.domain.enums.PaymentStatus;
-import com.java.repositories.AdressRepository;
+import com.java.repositories.AddressRepository;
 import com.java.repositories.CategoryRepository;
 import com.java.repositories.CityRepository;
 import com.java.repositories.ClientRepository;
@@ -29,6 +25,10 @@ import com.java.repositories.OrderRepository;
 import com.java.repositories.PaymentRepository;
 import com.java.repositories.ProductRepository;
 import com.java.repositories.StateRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class TestConfig implements CommandLineRunner{
@@ -46,7 +46,7 @@ public class TestConfig implements CommandLineRunner{
 	CityRepository cityRepository;
 	
 	@Autowired
-	AdressRepository adressRepository;
+	AddressRepository adressRepository;
 	
 	@Autowired
 	ClientRepository clientRepository;

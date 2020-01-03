@@ -1,4 +1,4 @@
-package com.java.resources;
+package com.java.dto;
 
 import java.io.Serializable;
 
