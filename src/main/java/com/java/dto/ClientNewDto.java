@@ -2,22 +2,46 @@ package com.java.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import com.java.services.validation.ClientInsert;
+
+import org.hibernate.validator.constraints.Length;
+
+@ClientInsert
 public class ClientNewDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+    @NotEmpty(message = "Preenchimento Obrigátorio")
+    @Length(min = 5, max = 120, message = "Tamanho deve ser entre 5 e 120 caracteres")
     private String name;
-	private String email;
-	private String cpfOrCnpj;
+
+    @NotEmpty(message = "Preenchimento Obrigátorio")
+    @Email(message = "Email inválido")
+    private String email;
+    
+    @NotEmpty(message = "Preenchimento Obrigátorio")
+    private String cpfOrCnpj;
+    
     private Integer type;
     
+    @NotEmpty(message = "Preenchimento Obrigátorio")
     private String place;
+
+    @NotEmpty(message = "Preenchimento Obrigátorio")
 	private String number;
-	private String complement;
-	private String neighborhood;
+    
+    private String complement;
+    private String neighborhood;
+    
+    @NotEmpty(message = "Preenchimento Obrigátorio")
     private String zipCode;
     
+    @NotEmpty(message = "Preenchimento Obrigátorio")
     private String phone01;
+    
     private String phone02;
     private String phone03;
 
