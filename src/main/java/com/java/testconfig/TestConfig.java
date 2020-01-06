@@ -152,7 +152,7 @@ public class TestConfig implements CommandLineRunner {
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 
 		OrderItem orderItem1 = new OrderItem(order1, p1, 0.00, 1, 2000.00);
-		OrderItem orderItem2 = new OrderItem(order1, p2, 0.00, 2, 1600.00);
+		OrderItem orderItem2 = new OrderItem(order1, p2, 0.00, 2, 800.00);
 		OrderItem orderItem3 = new OrderItem(order2, p2, 100.00, 1, 800.00);
 
 		order1.getItems().addAll(Arrays.asList(orderItem1, orderItem2));
