@@ -10,8 +10,8 @@ import com.java.domain.Client;
 import com.java.domain.Order;
 import com.java.domain.OrderItem;
 import com.java.domain.Payment;
-import com.java.domain.PaymentBankBill;
 import com.java.domain.PaymentCard;
+import com.java.domain.PaymentSlip;
 import com.java.domain.Product;
 import com.java.domain.State;
 import com.java.domain.enums.ClientType;
@@ -142,7 +142,7 @@ public class TestConfig implements CommandLineRunner {
 		Payment payment1 = new PaymentCard(null, PaymentStatus.PAID, order1, 6);
 		order1.setPayment(payment1);
 
-		Payment payment2 = new PaymentBankBill(null, PaymentStatus.PENDING, order2,
+		Payment payment2 = new PaymentSlip(null, PaymentStatus.PENDING, order2,
 				simpleDateFormat.parse("20/10/2019 00:00"), null);
 		order2.setPayment(payment2);
 

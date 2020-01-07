@@ -5,23 +5,25 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.java.domain.enums.PaymentStatus;
 
 @Entity
-public class PaymentBankBill extends Payment{
-	
+@JsonTypeName("paymentBankBill")
+public class PaymentSlip extends Payment {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dueDate;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date paymenDate;
-	
-	public PaymentBankBill() {	
+
+	public PaymentSlip() {
 	}
 
-	public PaymentBankBill(Integer id, PaymentStatus status, Order order, Date dueDate, Date paymentDate) {
+	public PaymentSlip(Integer id, PaymentStatus status, Order order, Date dueDate, Date paymentDate) {
 		super(id, status, order);		
 		this.dueDate = dueDate;
 		this.paymenDate = paymentDate;
