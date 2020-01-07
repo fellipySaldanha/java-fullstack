@@ -14,6 +14,7 @@ import com.java.services.exceptions.ObjectNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderService {
@@ -39,6 +40,7 @@ public class OrderService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Order.class.getName()));		
 	}
 	
+	@Transactional
 	public Order insert(Order order) {
 		order.setId(null);
 		order.setInstant(new Date());

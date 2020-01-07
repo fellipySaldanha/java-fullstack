@@ -1,5 +1,6 @@
-package com.java.testconfig;
+package com.java.services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
@@ -27,11 +28,10 @@ import com.java.repositories.ProductRepository;
 import com.java.repositories.StateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
-@Configuration
-public class TestConfig implements CommandLineRunner {
+@Service
+public class DBService{
 
 	@Autowired
 	CategoryRepository categoryRepository;
@@ -60,8 +60,8 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	OrderItemRepository orderItemRepository;
 
-	@Override
-	public void run(String... args) throws Exception {
+	
+	public void instantiateTestDatabase() throws ParseException{
 
 		Category cat1 = new Category(null, "Informática");
 		Category cat2 = new Category(null, "Escritório");
@@ -69,7 +69,7 @@ public class TestConfig implements CommandLineRunner {
 		Category cat4 = new Category(null, "Eletrônicos");
 		Category cat5 = new Category(null, "Jardinagem");
 		Category cat6 = new Category(null, "Decoração");
-		Category cat7 = new Category(null, "Perfumaria");
+		Category cat7 = new Category(null, "Perfumaria");		
 
 		Product p1 = new Product(null, "Computador", 2000.00);
 		Product p2 = new Product(null, "Impressora", 800.00);
