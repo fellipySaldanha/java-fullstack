@@ -1,8 +1,11 @@
 package com.java.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -136,5 +139,27 @@ public class Order implements Serializable{
 			return false;
 		return true;
 	}	
+
+	@Override
+	public String toString() {
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número: ");
+		builder.append(getId());
+		builder.append(", Realizado em: ");
+		builder.append(simpleDateFormat.format(getInstant()));
+		builder.append(", Cliente: ");
+		builder.append(getClient().getName());
+		builder.append(", Situação do pagamento: ");
+		builder.append(getPayment().getStatus().getDescription());
+		builder.append("\nDetalhes:\n");
+		for (OrderItem orderItem : getItems()) {
+			builder.append(orderItem.toString());
+		}
+		builder.append("Valor total: ");
+		builder.append(numberFormat.format(getAmount()));
+		return builder.toString();
+	}
 	
 }

@@ -34,6 +34,9 @@ public class OrderService {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private ClientService clientService;
+
 	public Order findById(Integer id) {
 		Optional<Order> category = repository.findById(id);
 		return category.orElseThrow(() -> new ObjectNotFoundException(
@@ -44,6 +47,7 @@ public class OrderService {
 	public Order insert(Order order) {
 		order.setId(null);
 		order.setInstant(new Date());
+		order.setClient(clientService.findById(order.getClient().getId()));
 		order.getPayment().setStatus(PaymentStatus.PENDING);
 		order.getPayment().setOrder(order);
 		if (order.getPayment() instanceof PaymentSlip) {
@@ -55,11 +59,13 @@ public class OrderService {
 
 		for (OrderItem orderItem : order.getItems()) {
 			orderItem.setDeal(0.0);
-			orderItem.setPrice(productService.findById(orderItem.getProduct().getId()).getPrice());
+			orderItem.setProduct(productService.findById(orderItem.getProduct().getId()));
+			orderItem.setPrice(orderItem.getProduct().getPrice());		
 			orderItem.setOrder(order);
 		}
 
 		orderItemRepository.saveAll(order.getItems());
+		System.out.println(order);
 		return order;
 	}
 	
