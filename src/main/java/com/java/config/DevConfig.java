@@ -3,6 +3,8 @@ package com.java.config;
 import java.text.ParseException;
 
 import com.java.services.DBService;
+import com.java.services.EmailService;
+import com.java.services.SmtpEmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,11 @@ public class DevConfig {
             dbService.instantiateTestDatabase();
             return true;
         }
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
     
 }
