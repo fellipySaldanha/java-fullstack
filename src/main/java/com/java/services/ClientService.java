@@ -17,10 +17,13 @@ import com.java.domain.Address;
 import com.java.domain.City;
 import com.java.domain.Client;
 import com.java.domain.enums.ClientType;
+import com.java.domain.enums.Profile;
 import com.java.dto.ClientDTO;
 import com.java.dto.ClientNewDto;
 import com.java.repositories.AddressRepository;
 import com.java.repositories.ClientRepository;
+import com.java.security.UserSpringSecurity;
+import com.java.services.exceptions.AuthorizationException;
 import com.java.services.exceptions.DataIntegrityException;
 import com.java.services.exceptions.ObjectNotFoundException;
 
@@ -37,6 +40,10 @@ public class ClientService {
 	private AddressRepository addressRepository;
 	
 	public Client findById(Integer id) {
+		UserSpringSecurity user = UserService.authenticated();
+		if (user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
 		Optional<Client> client = repository.findById(id);
 		return client.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));		
