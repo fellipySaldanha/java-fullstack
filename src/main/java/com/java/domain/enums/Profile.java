@@ -1,7 +1,7 @@
 package com.java.domain.enums;
 
 public enum Profile {
-	ADMIN(1, "ROLE_ADM"),
+	ADMIN(1, "ROLE_ADMIN"),
 	CLIENT(2, "ROLE_CLIENT");	
 	
 	private int code;
