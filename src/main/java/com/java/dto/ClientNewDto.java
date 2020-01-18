@@ -46,6 +46,9 @@ public class ClientNewDto implements Serializable {
     private String phone03;
 
     private Integer cityId;
+    
+    @NotEmpty
+    private String password;
 
     public ClientNewDto(){        
     }
@@ -130,7 +133,7 @@ public class ClientNewDto implements Serializable {
         this.phone01 = phone01;
     }
 
-    public String getPhone02() {
+	public String getPhone02() {
         return phone02;
     }
 
@@ -153,5 +156,13 @@ public class ClientNewDto implements Serializable {
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
     }    
+    
+    public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
     
 }

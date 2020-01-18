@@ -5,6 +5,14 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.java.domain.Address;
 import com.java.domain.City;
 import com.java.domain.Client;
@@ -16,15 +24,11 @@ import com.java.repositories.ClientRepository;
 import com.java.services.exceptions.DataIntegrityException;
 import com.java.services.exceptions.ObjectNotFoundException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Service;
-
 @Service
 public class ClientService {
+	
+	@Autowired
+	private BCryptPasswordEncoder encodePassword;
 	
 	@Autowired
 	private ClientRepository repository;
@@ -76,7 +80,7 @@ public class ClientService {
 	}
 
 	public Client fromDTO(ClientNewDto clientDto){
-		Client client = new Client(null, clientDto.getName(), clientDto.getEmail(), clientDto.getCpfOrCnpj(), ClientType.toEnum(clientDto.getType()));
+		Client client = new Client(null, clientDto.getName(), clientDto.getEmail(), clientDto.getCpfOrCnpj(), ClientType.toEnum(clientDto.getType()), encodePassword.encode(clientDto.getPassword()));
 		City city = new City(clientDto.getCityId(), null, null);
 		Address address = new Address(null, clientDto.getPlace(), clientDto.getNumber(), clientDto.getComplement(), clientDto.getNeighborhood(), clientDto.getZipCode(), client, city);
 		client.getAdresses().add(address);
@@ -94,6 +98,6 @@ public class ClientService {
 	}
 
 	public Client fromDTO(ClientDTO clientDto){
-		return new Client(clientDto.getId(), clientDto.getName(), clientDto.getEmail(), null, null);
+		return new Client(clientDto.getId(), clientDto.getName(), clientDto.getEmail(), null, null, null);
 	}
 }

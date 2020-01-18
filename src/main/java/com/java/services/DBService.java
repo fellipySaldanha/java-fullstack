@@ -28,10 +28,14 @@ import com.java.repositories.ProductRepository;
 import com.java.repositories.StateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DBService{
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncode;
 
 	@Autowired
 	CategoryRepository categoryRepository;
@@ -123,7 +127,7 @@ public class DBService{
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2));
 
-		Client client1 = new Client(null, "Maria Silva", "fellipy.saldanha@gmail.com", "36378912377", ClientType.PESSOAFISICA);
+		Client client1 = new Client(null, "Maria Silva", "fellipy.saldanha@gmail.com", "36378912377", ClientType.PESSOAFISICA, passwordEncode.encode("123"));
 		client1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 
 		Address adress1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", client1, city1);
